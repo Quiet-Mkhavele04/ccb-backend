@@ -1,0 +1,20 @@
+# .NET build output
+**/bin/
+**/obj/
+**/.vs/
+
+# Local IDE files
+*.user
+*.suo
+
+# Local settings and secrets
+**/appsettings.json
+**/appsettings.Development.json
+**/appsettings.Local.json
+
+# Uploaded user images
+**/wwwroot/uploads/
+
+# Logs
+*.log
+logs/
