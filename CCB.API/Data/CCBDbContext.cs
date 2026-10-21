@@ -231,23 +231,93 @@ public virtual DbSet<OrderItem> OrderItems { get; set; }
                 .HasConstraintName("FK_CommunityMembers_Profile");
         });
 
-        modelBuilder.Entity<CommunityMessage>(entity =>
-        {
-            entity.HasKey(e => e.CommunityMessageId).HasName("PK__Communit__FE366BD4C08A73D8");
+        modelBuilder.Entity<CommunityMessage>(
+    entity =>
+    {
+        entity.HasKey(e =>
+            e.CommunityMessageId
+        )
+        .HasName(
+            "PK__Communit__FE366BD4C08A73D8"
+        );
 
-            entity.HasIndex(e => e.CommunityId, "IX_CommunityMessages_CommunityID");
+        entity.HasIndex(
+            e => e.CommunityId,
+            "IX_CommunityMessages_CommunityID"
+        );
 
-            entity.Property(e => e.CommunityMessageId).HasColumnName("CommunityMessageID");
-            entity.Property(e => e.AvatarColor).HasMaxLength(20);
-            entity.Property(e => e.CommunityId).HasColumnName("CommunityID");
-            entity.Property(e => e.SenderName).HasMaxLength(100);
-            entity.Property(e => e.SentAt).HasDefaultValueSql("(sysdatetime())", "DF_CommunityMessages_SentAt");
+        entity.HasIndex(
+            e => e.SenderProfileId,
+            "IX_CommunityMessages_SenderProfileID"
+        );
 
-            entity.HasOne(d => d.Community).WithMany(p => p.CommunityMessages)
-                .HasForeignKey(d => d.CommunityId)
-                .HasConstraintName("FK_CommunityMessages_Communities");
-        });
+        entity.Property(e =>
+            e.CommunityMessageId
+        )
+        .HasColumnName(
+            "CommunityMessageID"
+        );
 
+        entity.Property(e =>
+            e.CommunityId
+        )
+        .HasColumnName(
+            "CommunityID"
+        );
+
+        entity.Property(e =>
+            e.SenderProfileId
+        )
+        .HasColumnName(
+            "SenderProfileID"
+        );
+
+        entity.Property(e =>
+            e.SenderName
+        )
+        .HasMaxLength(100);
+
+        entity.Property(e =>
+            e.AvatarColor
+        )
+        .HasMaxLength(20);
+
+        entity.Property(e =>
+            e.SentAt
+        )
+        .HasDefaultValueSql(
+            "(sysdatetime())",
+            "DF_CommunityMessages_SentAt"
+        );
+
+        entity.HasOne(e =>
+            e.Community
+        )
+        .WithMany(e =>
+            e.CommunityMessages
+        )
+        .HasForeignKey(e =>
+            e.CommunityId
+        )
+        .HasConstraintName(
+            "FK_CommunityMessages_Communities"
+        );
+
+        entity.HasOne(e =>
+            e.SenderProfile
+        )
+        .WithMany()
+        .HasForeignKey(e =>
+            e.SenderProfileId
+        )
+        .OnDelete(
+            DeleteBehavior.NoAction
+        )
+        .HasConstraintName(
+            "FK_CommunityMessages_SenderProfile"
+        );
+    }
+);
         modelBuilder.Entity<Contact>(entity =>
         {
             entity.HasKey(e => e.ContactId).HasName("PK__Contacts__5C6625BB53207B5D");
