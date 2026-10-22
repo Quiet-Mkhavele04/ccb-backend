@@ -1,19 +1,76 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace CCB.API.Models;
 
 public partial class CommunityJob
 {
-    public int CommunityJobId { get; set; }
+    public int CommunityJobId {
+        get;
+        set;
+    }
 
-    public int CommunityId { get; set; }
+    public int CommunityId {
+        get;
+        set;
+    }
 
-    public string Title { get; set; } = null!;
+    public int? PostedByProfileId {
+        get;
+        set;
+    }
 
-    public string Detail { get; set; } = null!;
+    public string Title {
+        get;
+        set;
+    } = null!;
 
-    public DateTime PostedAt { get; set; }
+    public string Detail {
+        get;
+        set;
+    } = null!;
 
-    public virtual Community Community { get; set; } = null!;
+    public string? Company {
+        get;
+        set;
+    }
+
+    public string? Location {
+        get;
+        set;
+    }
+
+    public string? EmploymentType {
+        get;
+        set;
+    }
+
+    public string? ApplicationContact {
+        get;
+        set;
+    }
+
+    public DateTime PostedAt {
+        get;
+        set;
+    }
+
+    public DateTime? ExpiresAt {
+        get;
+        set;
+    }
+
+    public bool IsActive {
+        get;
+        set;
+    }
+
+    public virtual Community Community {
+        get;
+        set;
+    } = null!;
+
+    public virtual Profile? PostedByProfile {
+        get;
+        set;
+    }
 }

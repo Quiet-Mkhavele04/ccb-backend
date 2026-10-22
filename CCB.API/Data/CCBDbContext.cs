@@ -172,40 +172,246 @@ public virtual DbSet<OrderItem> OrderItems { get; set; }
                 .HasConstraintName("FK_CommunityEvents_Communities");
         });
 
-        modelBuilder.Entity<CommunityJob>(entity =>
-        {
-            entity.HasKey(e => e.CommunityJobId).HasName("PK__Communit__2FB5710D6FC72F4F");
+       modelBuilder.Entity<CommunityJob>(
+    entity =>
+    {
+        entity.HasKey(e =>
+            e.CommunityJobId
+        )
+        .HasName(
+            "PK__Communit__2FB5710D6FC72F4F"
+        );
 
-            entity.HasIndex(e => e.CommunityId, "IX_CommunityJobs_CommunityID");
+        entity.HasIndex(
+            e => e.CommunityId,
+            "IX_CommunityJobs_CommunityID"
+        );
 
-            entity.Property(e => e.CommunityJobId).HasColumnName("CommunityJobID");
-            entity.Property(e => e.CommunityId).HasColumnName("CommunityID");
-            entity.Property(e => e.Detail).HasMaxLength(2000);
-            entity.Property(e => e.PostedAt).HasDefaultValueSql("(sysdatetime())", "DF_CommunityJobs_PostedAt");
-            entity.Property(e => e.Title).HasMaxLength(200);
+        entity.HasIndex(
+            e => e.PostedByProfileId,
+            "IX_CommunityJobs_PostedByProfileID"
+        );
 
-            entity.HasOne(d => d.Community).WithMany(p => p.CommunityJobs)
-                .HasForeignKey(d => d.CommunityId)
-                .HasConstraintName("FK_CommunityJobs_Communities");
-        });
+        entity.Property(e =>
+            e.CommunityJobId
+        )
+        .HasColumnName(
+            "CommunityJobID"
+        );
 
-        modelBuilder.Entity<CommunityListing>(entity =>
-        {
-            entity.HasKey(e => e.CommunityListingId).HasName("PK__Communit__308054450C8752A9");
+        entity.Property(e =>
+            e.CommunityId
+        )
+        .HasColumnName(
+            "CommunityID"
+        );
 
-            entity.HasIndex(e => e.CommunityId, "IX_CommunityListings_CommunityID");
+        entity.Property(e =>
+            e.PostedByProfileId
+        )
+        .HasColumnName(
+            "PostedByProfileID"
+        );
 
-            entity.Property(e => e.CommunityListingId).HasColumnName("CommunityListingID");
-            entity.Property(e => e.CommunityId).HasColumnName("CommunityID");
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetime())", "DF_CommunityListings_CreatedAt");
-            entity.Property(e => e.Description).HasMaxLength(1000);
-            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.Title).HasMaxLength(200);
+        entity.Property(e =>
+            e.Title
+        )
+        .HasMaxLength(200);
 
-            entity.HasOne(d => d.Community).WithMany(p => p.CommunityListings)
-                .HasForeignKey(d => d.CommunityId)
-                .HasConstraintName("FK_CommunityListings_Communities");
-        });
+        entity.Property(e =>
+            e.Detail
+        )
+        .HasMaxLength(2000);
+
+        entity.Property(e =>
+            e.Company
+        )
+        .HasMaxLength(150);
+
+        entity.Property(e =>
+            e.Location
+        )
+        .HasMaxLength(200);
+
+        entity.Property(e =>
+            e.EmploymentType
+        )
+        .HasMaxLength(50);
+
+        entity.Property(e =>
+            e.ApplicationContact
+        )
+        .HasMaxLength(300);
+
+        entity.Property(e =>
+            e.PostedAt
+        )
+        .HasDefaultValueSql(
+            "(sysdatetime())",
+            "DF_CommunityJobs_PostedAt"
+        );
+
+        entity.Property(e =>
+            e.IsActive
+        )
+        .HasDefaultValue(
+            true
+        );
+
+        entity.HasOne(e =>
+            e.Community
+        )
+        .WithMany(e =>
+            e.CommunityJobs
+        )
+        .HasForeignKey(e =>
+            e.CommunityId
+        )
+        .HasConstraintName(
+            "FK_CommunityJobs_Communities"
+        );
+
+        entity.HasOne(e =>
+            e.PostedByProfile
+        )
+        .WithMany()
+        .HasForeignKey(e =>
+            e.PostedByProfileId
+        )
+        .OnDelete(
+            DeleteBehavior.NoAction
+        )
+        .HasConstraintName(
+            "FK_CommunityJobs_PostedByProfile"
+        );
+    }
+);
+
+modelBuilder.Entity<CommunityListing>(
+    entity =>
+    {
+        entity.HasKey(e =>
+            e.CommunityListingId
+        )
+        .HasName(
+            "PK__Communit__308054450C8752A9"
+        );
+
+        entity.HasIndex(
+            e => e.CommunityId,
+            "IX_CommunityListings_CommunityID"
+        );
+
+        entity.HasIndex(
+            e => e.SellerProfileId,
+            "IX_CommunityListings_SellerProfileID"
+        );
+
+        entity.Property(e =>
+            e.CommunityListingId
+        )
+        .HasColumnName(
+            "CommunityListingID"
+        );
+
+        entity.Property(e =>
+            e.CommunityId
+        )
+        .HasColumnName(
+            "CommunityID"
+        );
+
+        entity.Property(e =>
+            e.SellerProfileId
+        )
+        .HasColumnName(
+            "SellerProfileID"
+        );
+
+        entity.Property(e =>
+            e.Title
+        )
+        .HasMaxLength(200);
+
+        entity.Property(e =>
+            e.Price
+        )
+        .HasColumnType(
+            "decimal(18, 2)"
+        );
+
+        entity.Property(e =>
+            e.Description
+        )
+        .HasMaxLength(1000);
+
+        entity.Property(e =>
+            e.Category
+        )
+        .HasMaxLength(100);
+
+        entity.Property(e =>
+            e.Condition
+        )
+        .HasColumnName("Condition")
+        .HasMaxLength(50);
+
+        entity.Property(e =>
+            e.Location
+        )
+        .HasMaxLength(200);
+
+        entity.Property(e =>
+            e.Contact
+        )
+        .HasMaxLength(300);
+
+        entity.Property(e =>
+            e.ImageUrl
+        )
+        .HasMaxLength(500);
+
+        entity.Property(e =>
+            e.IsAvailable
+        )
+        .HasDefaultValue(true);
+
+        entity.Property(e =>
+            e.CreatedAt
+        )
+        .HasDefaultValueSql(
+            "(sysdatetime())",
+            "DF_CommunityListings_CreatedAt"
+        );
+
+        entity.HasOne(e =>
+            e.Community
+        )
+        .WithMany(e =>
+            e.CommunityListings
+        )
+        .HasForeignKey(e =>
+            e.CommunityId
+        )
+        .HasConstraintName(
+            "FK_CommunityListings_Communities"
+        );
+
+        entity.HasOne(e =>
+            e.SellerProfile
+        )
+        .WithMany()
+        .HasForeignKey(e =>
+            e.SellerProfileId
+        )
+        .OnDelete(
+            DeleteBehavior.NoAction
+        )
+        .HasConstraintName(
+            "FK_CommunityListings_SellerProfile"
+        );
+    }
+);
 
         modelBuilder.Entity<CommunityMember>(entity =>
         {
